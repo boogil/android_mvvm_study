@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">udemy_mvvm</string>
+    <string name="main_error">An error occured while loading Data.</string>
+</resources>
