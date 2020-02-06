@@ -17,8 +17,11 @@ import javax.inject.Inject
  */
 class ListViewModel : ViewModel() {
 
+    /**
+     * 현재 DI를 이용하여 model 종속성 제거, 그리고 android view 관련 코드가 없다. => Only Business Logic 만 있다.
+     */
     @Inject
-    lateinit var countriesService: CountriesService
+    lateinit var countriesService: CountriesService  // seperate model
     private val disposable = CompositeDisposable()
 
     val countries = MutableLiveData<List<Country>>()
