@@ -2,6 +2,7 @@ package com.urbanbase.udemy_mvvm.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.urbanbase.udemy_mvvm.di.DaggerApiComponent
 import com.urbanbase.udemy_mvvm.model.CountriesService
 import com.urbanbase.udemy_mvvm.model.Country
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -9,18 +10,24 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableObserver
 import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.schedulers.Schedulers
+import javax.inject.Inject
 
 /**
  * ViewModel 구성요소:  LiveData
  */
 class ListViewModel : ViewModel() {
 
-    private val countriesService = CountriesService()
+    @Inject
+    lateinit var countriesService: CountriesService
     private val disposable = CompositeDisposable()
 
     val countries = MutableLiveData<List<Country>>()
     val bLoadError = MutableLiveData<Boolean>()
     val bLoading = MutableLiveData<Boolean>()
+
+    init {
+        DaggerApiComponent.create().inject(this)
+    }
 
     fun refresh() {
         fetchCountries()
