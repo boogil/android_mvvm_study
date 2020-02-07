@@ -28,6 +28,15 @@ import java.util.concurrent.TimeUnit
  * Example local unit test, which will execute on the development machine (host).
  *
  * See [testing documentation](http://d.android.com/tools/testing).
+ *
+ * TDD의 활용 범위: business Logic 만을 위한 테스팅이기 때문에, 받은 데이터를 가지고 분기 행위를 테스팅해볼 수 있다.
+ * 예를들어,
+ * 1) 데이터 통신 에러에 대한 대응
+ * 2) 회원 권한에 따른 분기 테스트 (미가입, 가입, 프리미엄)
+ *
+ * Urbanbase AR 에서의
+ * 1) 좋아요 눌렀을 때의 화면 상태값 체크
+ * 2) 실제 api 리턴값을 빠르게 확인 가능
  */
 class ExampleUnitTest {
 
@@ -65,7 +74,6 @@ class ExampleUnitTest {
         assertEquals(1, listViewModel.countries.value?.size)
         assertEquals(false, listViewModel.bLoadError.value)
         assertEquals(false, listViewModel.bLoading.value)
-
     }
 
 
@@ -80,6 +88,13 @@ class ExampleUnitTest {
 
         assertEquals(true, listViewModel.bLoadError.value)
         assertEquals(false, listViewModel.bLoadError.value)
+    }
+
+    @Test
+    fun apiUrlValidateCheck() {
+        listViewModel.refresh()
+
+        assertEquals(20, listViewModel.countries.value?.size)
     }
 
     @Before
