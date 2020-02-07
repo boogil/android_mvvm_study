@@ -14,6 +14,9 @@ import javax.inject.Inject
 
 /**
  * ViewModel 구성요소:  LiveData
+ *
+ *
+ * RxJava: service <-> viewModel의 연관성을 제거
  */
 class ListViewModel : ViewModel() {
 
@@ -41,7 +44,7 @@ class ListViewModel : ViewModel() {
         disposable.add(
             countriesService
                 .getCountries()
-                .subscribeOn(Schedulers.newThread()) // subscribe to this observable on a new thread , 그래서 getCountries() 프로세스는 백엔드 스레드에서 돈다.
+                .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(object: DisposableSingleObserver<List<Country>>() {
                     override fun onSuccess(value: List<Country>?) {
