@@ -36,7 +36,7 @@ import java.util.concurrent.TimeUnit
  *
  * Urbanbase AR 에서의
  * 1) 좋아요 눌렀을 때의 화면 상태값 체크
- * 2) 실제 api 리턴값을 빠르게 확인 가능
+ * 2) 실제 api 리턴값을 빠르게 확인 가능 (에뮬레이터나 폰 디버깅은 느림)
  */
 class ExampleUnitTest {
 
