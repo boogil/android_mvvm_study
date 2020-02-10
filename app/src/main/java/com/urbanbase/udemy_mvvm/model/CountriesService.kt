@@ -1,19 +1,29 @@
 package com.urbanbase.udemy_mvvm.model
 
-import com.urbanbase.udemy_mvvm.di.DaggerApiComponent
 import io.reactivex.Single
-import javax.inject.Inject
+import retrofit2.Retrofit
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
+import retrofit2.converter.gson.GsonConverterFactory
 
 class CountriesService {
 
-    /**
-     * Dagger의 효과: nice seperation between how we create a variable and where we use it.
-     */
-    @Inject
-    lateinit var api: CountriesApi
+    private val BASE_URL = "https://raw.githubusercontent.com"
+    private val api: CountriesApi
 
+    /**
+     * addCallAdapterFactory() => RxJava를 사용해서 Observable, Observer 를 사용하겠다는 의미
+     * Observable: event 감지 후 event 를 emmit
+     * Observer: subscribe 한 곳에서 event를 receive
+     *
+     * Single 클래스는 Observable 에 해당한다.
+     */
     init {
-        DaggerApiComponent.create().inject(this)
+        api = Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .build()
+            .create(CountriesApi::class.java)
     }
 
     fun getCountries(): Single<List<Country>> {
